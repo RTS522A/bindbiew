@@ -1,12 +1,7 @@
 name: Build all driver samples
 on:
-  push:
-    branches:
-      - main
-      - develop
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
+  workflow_dispatch:
+
 jobs:
   build:
     name: Build driver samples
@@ -32,6 +27,11 @@ jobs:
           WDS_Configuration: ${{ matrix.configuration }}
           WDS_Platform: ${{ matrix.platform }}
           WDS_ReportFileName: _overview.${{ matrix.configuration }}.${{ matrix.platform }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Release
+          path: |
+            **\Release\
 
       - name: Archive build logs and overview build reports
         uses: actions/upload-artifact@v3
